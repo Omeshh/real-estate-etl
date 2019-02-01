@@ -21,7 +21,7 @@ The sample data is for the flats in Berlin available for rent at immobilienscout
     - Upload the function code zip file from S3 bucket.
     - Set environment variables (DATABASE, DBUSER, DBPASSWORD, ENDPOINT, PORT) for database connection.
 
-## Test:
+#### Test:
 1. Upload the raw json data file ending with *yyyymmdd_hh.json format to S3 data bucket.
 2. Go to AWS CloudWatch to monitor the AWS Lamda function logs for ETL Processing.
 3. Verify the data in tables: 
