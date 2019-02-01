@@ -90,6 +90,7 @@ def merge_fact_flat(session):
                     , status = EXCLUDED.status
                     , created_date_key = EXCLUDED.created_date_key
                     , created_time_key = EXCLUDED.created_time_key
+                    , created_time_key = EXCLUDED.created_time_key
                     , modified_date_key = EXCLUDED.modified_date_key
                     , modified_time_key = EXCLUDED.modified_time_key;'''
 
@@ -97,4 +98,4 @@ def merge_fact_flat(session):
     session.commit()
 
     print('Total affected {} rows for merging data from stage table.'.format(result.rowcount))
-    print('Finished merging data from stage table {}'.format(FactFlat.__table__.fullname))
+    print('Finished merging data from stage table to {} table'.format(FactFlat.__table__.fullname))

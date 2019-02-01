@@ -2,7 +2,7 @@ import settings
 
 from sqlalchemy import (
     Table, Column, Integer, CHAR, Index)
-from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -15,7 +15,7 @@ class RealEstate(Base):
     id = Column(Integer, primary_key=True)
     file_date_key = Column(Integer)
     file_time_key = Column(CHAR(8))
-    data = Column(JSONB)
+    data = Column(JSON)
 
     def __repr__(self):
         return "<RealEstateStage(id='{0}', body='{0}')>".format(self.id, self.body)

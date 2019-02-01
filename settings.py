@@ -1,8 +1,13 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
+from os import environ
 
-SQL_CONN = "postgresql+psycopg2://airflow:airflow@localhost/real_estate"
-
+SQL_CONN = 'postgresql+psycopg2://{dbuser}:{dbpassword}@{endpoint}:{port}/{database}'.\
+    format(endpoint=environ.get('ENDPOINT'),
+           dbuser=environ.get('DBUSER'),
+           dbpassword=environ.get('DBPASSWORD'),
+           port=environ.get('PORT'),
+           database=environ.get('DATABASE'))
 REFLECT_METADATA_FOR = {"etl": ['stage_dim_agency', 'stage_dim_geography', 'stage_fact_flat'],
                         "dwh": ['dim_agency', 'dim_geography', 'fact_flat']}
 

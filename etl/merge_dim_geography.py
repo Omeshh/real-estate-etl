@@ -18,4 +18,4 @@ def merge_dim_geography(session):
     session.commit()
 
     print('Total affected {} rows for merging data from stage table.'.format(result.rowcount))
-    print('Finished merging data from stage table {}'.format(DimGeography.__table__.fullname))
+    print('Finished merging data from stage table to {} table'.format(DimGeography.__table__.fullname))

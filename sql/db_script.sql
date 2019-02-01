@@ -5,9 +5,9 @@
 -- CREATE ROLE etl_user;
 -- CREATE ROLE bi_user;
 
--- CREATE SCHEMA src;
--- CREATE SCHEMA etl;
--- CREATE SCHEMA dwh;
+CREATE SCHEMA src;
+CREATE SCHEMA etl;
+CREATE SCHEMA dwh;
 
 -- DROP TABLE IF EXISTS src.real_estate_immobilienscout24;
 
@@ -26,7 +26,7 @@ CREATE TABLE etl.stage_dim_geography (
 -- DROP TABLE IF EXISTS etl.stage_dim_agency;
 CREATE TABLE etl.stage_dim_agency (
 	id serial NOT NULL,
-	contact_details_id int4 NULL,
+	contact_details_id int NULL,
 	customer_id varchar(50) NULL,
 	email varchar(255) NULL,
 	city_name varchar(50) NULL,
@@ -47,10 +47,10 @@ CREATE TABLE etl.stage_dim_agency (
 -- DROP TABLE IF EXISTS etl.stage_fact_flat;
 CREATE TABLE etl.stage_fact_flat (
 	id serial NOT NULL,
-	file_date_key int4 NOT NULL,
-	file_time_key bpchar(8) NULL,
-	real_estate_id int4 NULL,
-	contact_details_id int4 NULL,
+	file_date_key int NOT NULL,
+	file_time_key char(8) NULL,
+	real_estate_id int NULL,
+	contact_details_id int NULL,
 	city_name varchar(50) NULL,
 	country_code varchar(50) NULL,
 	country_name varchar(50) NULL,
@@ -71,10 +71,10 @@ CREATE TABLE etl.stage_fact_flat (
 	total_parking_spaces int2 NULL,
 	has_attachments varchar(10) NULL,
 	status varchar(10) NULL,
-	created_date_key int4 NULL,
-	created_time_key bpchar(8) NULL,
-	modified_date_key int4 NULL,
-	modified_time_key bpchar(8) NULL,
+	created_date_key int NULL,
+	created_time_key char(8) NULL,
+	modified_date_key int NULL,
+	modified_time_key char(8) NULL,
 	CONSTRAINT pk_stage_fact_flat PRIMARY KEY (id)
 );
 
@@ -82,24 +82,24 @@ CREATE TABLE etl.stage_fact_flat (
 -- Create dimension and fact tables:
 -- DROP TABLE IF EXISTS dwh.dim_date;
 CREATE TABLE dwh.dim_date (
-	date_key int4 NOT NULL,
+	date_key int NOT NULL,
 	date_actual date NOT NULL,
 	epoch int8 NOT NULL,
 	day_suffix varchar(4) NOT NULL,
 	day_name varchar(9) NOT NULL,
-	day_of_week int4 NOT NULL,
-	day_of_month int4 NOT NULL,
-	day_of_quarter int4 NOT NULL,
-	day_of_year int4 NOT NULL,
-	week_of_month int4 NOT NULL,
-	week_of_year int4 NOT NULL,
-	week_of_year_iso bpchar(10) NOT NULL,
-	month_actual int4 NOT NULL,
+	day_of_week int NOT NULL,
+	day_of_month int NOT NULL,
+	day_of_quarter int NOT NULL,
+	day_of_year int NOT NULL,
+	week_of_month int NOT NULL,
+	week_of_year int NOT NULL,
+	week_of_year_iso char(10) NOT NULL,
+	month_actual int NOT NULL,
 	month_name varchar(9) NOT NULL,
-	month_name_abbreviated bpchar(3) NOT NULL,
-	quarter_actual int4 NOT NULL,
+	month_name_abbreviated char(3) NOT NULL,
+	quarter_actual int NOT NULL,
 	quarter_name varchar(9) NOT NULL,
-	year_actual int4 NOT NULL,
+	year_actual int NOT NULL,
 	first_day_of_week date NOT NULL,
 	last_day_of_week date NOT NULL,
 	first_day_of_month date NOT NULL,
@@ -108,8 +108,8 @@ CREATE TABLE dwh.dim_date (
 	last_day_of_quarter date NOT NULL,
 	first_day_of_year date NOT NULL,
 	last_day_of_year date NOT NULL,
-	mmyyyy bpchar(6) NOT NULL,
-	mmddyyyy bpchar(10) NOT NULL,
+	mmyyyy char(6) NOT NULL,
+	mmddyyyy char(10) NOT NULL,
 	weekend_indr bool NOT NULL,
 	CONSTRAINT dim_date_date_key_pk PRIMARY KEY (date_key)
 );
@@ -118,14 +118,14 @@ CREATE INDEX dim_date_date_actual_idx ON dwh.dim_date USING btree (date_actual);
 
 -- DROP TABLE IF EXISTS dwh.dim_time;
 CREATE TABLE dwh.dim_time (
-	time_key bpchar(8) NOT NULL,
+	time_key char(8) NOT NULL,
 	full_time time NOT NULL,
 	hour_num int2 NOT NULL,
 	minute_num int2 NOT NULL,
 	second_num int2 NOT NULL,
 	minute_of_day_num int2 NOT NULL,
-	time_12_hour bpchar(8) NOT NULL,
-	meridiem_indicator bpchar(2) NOT NULL,
+	time_12_hour char(8) NOT NULL,
+	meridiem_indicator char(2) NOT NULL,
 	CONSTRAINT dim_time_time_key_pk PRIMARY KEY (time_key)
 );
 CREATE INDEX dim_time_full_time_uindex ON dwh.dim_time USING btree (full_time);
@@ -146,8 +146,8 @@ CREATE UNIQUE INDEX idx_dim_geography_city_postal ON dwh.dim_geography USING btr
 -- DROP TABLE IF EXISTS dwh.dim_agency;
 CREATE TABLE dwh.dim_agency (
 	agency_key serial NOT NULL,
-	contact_details_id int4 NULL,
-	geography_key int4 NULL,
+	contact_details_id int NULL,
+	geography_key int NULL,
 	customer_id varchar(50) NULL,
 	email varchar(255) NULL,
 	house_number varchar(25) NULL,
@@ -165,11 +165,11 @@ CREATE UNIQUE INDEX idx_dim_agency_contact_details_id ON dwh.dim_agency USING bt
 -- DROP TABLE IF EXISTS dwh.fact_flat;
 CREATE TABLE dwh.fact_flat (
 	flat_key serial NOT NULL,
-	file_date_key int4 NOT NULL,
-	file_time_key bpchar(8) NULL,
-	real_estate_id int4 NULL,
-	agency_key int4 NULL,
-	geography_key int4 NULL,
+	file_date_key int NOT NULL,
+	file_time_key char(8) NULL,
+	real_estate_id int NULL,
+	agency_key int NULL,
+	geography_key int NULL,
 	house_number varchar(25) NULL,
 	street varchar(255) NULL,
 	latitude varchar(25) NULL,
@@ -186,10 +186,10 @@ CREATE TABLE dwh.fact_flat (
 	total_parking_spaces int2 NULL,
 	has_attachments varchar(10) NULL,
 	status varchar(10) NULL,
-	created_date_key int4 NULL,
-	created_time_key bpchar(8) NULL,
-	modified_date_key int4 NULL,
-	modified_time_key bpchar(8) NULL,
+	created_date_key int NULL,
+	created_time_key char(8) NULL,
+	modified_date_key int NULL,
+	modified_time_key char(8) NULL,
 	CONSTRAINT pk_fact_flat PRIMARY KEY (flat_key)
 );
 CREATE UNIQUE INDEX idx_fact_flat_agency_key ON dwh.fact_flat USING btree (real_estate_id, file_date_key, file_time_key);

@@ -55,4 +55,4 @@ def merge_dim_agency(session):
     session.commit()
 
     print('Total affected {} rows for merging data from stage table.'.format(result.rowcount))
-    print('Finished merging data from stage table {}'.format(DimAgency.__table__.fullname))
+    print('Finished merging data from stage table to {} table'.format(DimAgency.__table__.fullname))
