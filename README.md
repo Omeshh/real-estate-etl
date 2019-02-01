@@ -5,7 +5,7 @@ AWS Lamda function is used to perform ETL on raw json data which gets triggered 
 The sample data is for the flats in Berlin available for rent at immobilienscout24.de. 
 
 
-## Setup:
+#### Setup:
 
 1. Deployement:
     - Create AWS Lamda deployement zip file by adding the site packages and source code files at root of the zip file.
@@ -30,11 +30,11 @@ The sample data is for the flats in Berlin available for rent at immobilienscout
     - dwh.dim_agency
     - dwh.fact_flat
     
-## Note:
+#### Note:
 - ETL process assumes that the raw json file is uploaded every hour with file name format *yyyymmdd_hh.json
 
      
-## TODO:
+#### TODO:
 1. Create seprate database users for etl and reporting purpose with required permissions.
 2. Create view for masking the PII data from dwh.dim_agency table.
 3. Grant the required permissions on masked views and tables without PII data to reporting user.
